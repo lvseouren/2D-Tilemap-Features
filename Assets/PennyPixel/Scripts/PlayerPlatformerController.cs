@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerPlatformerController : PhysicsObject {
 
-    public float maxSpeed = 17;
-    public float jumpTakeOffSpeed = 17;
+    public float maxSpeed = 7;
+    public float jumpTakeOffSpeed = 7;
+    public Bullet bullet;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -32,6 +33,11 @@ public class PlayerPlatformerController : PhysicsObject {
             }
         }
 
+        if(Input.GetButtonDown("Fire1"))
+        { 
+            Fire(); 
+        }
+
         if(move.x > 0.01f)
         {
             if(spriteRenderer.flipX == true)
@@ -51,5 +57,11 @@ public class PlayerPlatformerController : PhysicsObject {
         animator.SetFloat ("velocityX", Mathf.Abs (velocity.x) / maxSpeed);
 
         targetVelocity = move * maxSpeed;
+    }
+
+    void Fire()
+    {
+        var newBullet = Instantiate(bullet);
+        newBullet.OnGenerate(transform.position);
     }
 }
