@@ -66,6 +66,6 @@ public class PlayerPlatformerController : PhysicsObject {
             newBullet = Instantiate(bullet);
         else
             newBullet.gameObject.SetActive(true);
-        newBullet.OnGenerate(transform.position);
+        newBullet.OnGenerate(transform.position, spriteRenderer.flipX);
     }
 }
