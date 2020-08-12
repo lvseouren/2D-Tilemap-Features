@@ -24,7 +24,12 @@ public class Bullet : PhysicsObject
 
     public void OnGenerate(Vector3 pos)
     {
+        bulletCollider2D.enabled = true;
+        collidedParticleSystem.SetActive(false);
+        bulletVisuals.SetActive(true);
+        pos.y = pos.y + 0.34f;
         transform.position = pos;
+        rb2d.position = pos;
         rb2d.velocity = new Vector2(5,0);
         isValid = true;
     }
@@ -37,7 +42,7 @@ public class Bullet : PhysicsObject
     {
         if (isValid && theCollider.CompareTag("Ground"))
         {
-            BulletCollided();
+             BulletCollided();
         }
     }
 
@@ -48,13 +53,13 @@ public class Bullet : PhysicsObject
         bulletVisuals.SetActive(false);
         collidedParticleSystem.SetActive(true);
         Invoke("DeactivateBulletGameObject", durationOfCollidedParticleSystem);
-
     }
 
     void DeactivateBulletGameObject()
     {
         isValid = false;
         gameObject.SetActive(false);
+        BulletPool.Instance.Recycle(this);
     }
 
 }

@@ -61,7 +61,11 @@ public class PlayerPlatformerController : PhysicsObject {
 
     void Fire()
     {
-        var newBullet = Instantiate(bullet);
+        Bullet newBullet = BulletPool.Instance.GetBullet();
+        if (newBullet == null)
+            newBullet = Instantiate(bullet);
+        else
+            newBullet.gameObject.SetActive(true);
         newBullet.OnGenerate(transform.position);
     }
 }
